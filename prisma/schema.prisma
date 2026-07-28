@@ -11,3 +11,65 @@ generator client {
 datasource db {
   provider = "sqlite"
 }
+
+model SessionsGroup {
+  id                     String @id @default(uuid())
+  responsibleCpf         String
+  responsiblePhoneNumber String
+
+  session Session[]
+}
+
+enum Status {
+  OPEN
+  CLOSED
+}
+
+enum SessionType {
+  NORMAL
+  KID
+}
+
+model Session {
+  id              String      @id @default(uuid())
+  braceletId      String
+  checkoutDate    DateTime?
+  checkinDate     DateTime
+  status          Status      @default(OPEN)
+  total           Decimal
+  sessionType     SessionType @default(NORMAL)
+  sessionsGroupId String
+
+  sessionGroup SessionsGroup @relation(fields: [sessionsGroupId], references: [id])
+
+  orders Orders[]
+}
+
+model MenuItems {
+  id          String  @id @default(uuid())
+  name        String
+  category    String
+  price       Decimal
+  isAvaliable Boolean
+
+  orderItems OrderItems[]
+}
+
+model Orders {
+  id        String   @id @default(uuid())
+  createdAt DateTime
+  sessionId String
+
+  session    Session      @relation(fields: [sessionId], references: [id])
+  orderItems OrderItems[]
+}
+
+model OrderItems {
+  id         String @id @default(uuid())
+  amount     Int
+  menuItemId String
+  ordersId   String
+
+  menuItems MenuItems @relation(fields: [menuItemId], references: [id])
+  orders    Orders    @relation(fields: [ordersId], references: [id])
+}
