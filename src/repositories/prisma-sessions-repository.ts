@@ -1,5 +1,5 @@
 import { prisma } from "@/lib/prisma.js";
-import type { Prisma } from "../../generated/prisma/client.js";
+import type { Prisma, Session } from "../../generated/prisma/client.js";
 
 export class PrismaSessionsRepository {
 	async findActiveSessionByBraceletId(braceletId: string) {
@@ -63,6 +63,14 @@ export class PrismaSessionsRepository {
 				sessionsGroupId,
 			},
 		});
+
+		return session;
+	}
+
+	async closeSession(braceletId: string) {
+		console.log(braceletId);
+		const session =
+			await prisma.$queryRaw<Session>`UPDATE Session SET checkoutDate = DATETIME('now'), STATUS = 'CLOSE' WHERE braceletId = ${braceletId} AND status = 'OPEN' RETURNING *`;
 
 		return session;
 	}
