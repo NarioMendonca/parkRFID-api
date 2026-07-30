@@ -12,7 +12,7 @@ CREATE TABLE "Session" (
     "checkoutDate" DATETIME,
     "checkinDate" DATETIME NOT NULL,
     "status" TEXT NOT NULL DEFAULT 'OPEN',
-    "total" DECIMAL NOT NULL,
+    "total" DECIMAL NOT NULL DEFAULT 0,
     "sessionType" TEXT NOT NULL DEFAULT 'NORMAL',
     "sessionsGroupId" TEXT NOT NULL,
     CONSTRAINT "Session_sessionsGroupId_fkey" FOREIGN KEY ("sessionsGroupId") REFERENCES "SessionsGroup" ("id") ON DELETE RESTRICT ON UPDATE CASCADE
@@ -44,3 +44,6 @@ CREATE TABLE "OrderItems" (
     CONSTRAINT "OrderItems_menuItemId_fkey" FOREIGN KEY ("menuItemId") REFERENCES "MenuItems" ("id") ON DELETE RESTRICT ON UPDATE CASCADE,
     CONSTRAINT "OrderItems_ordersId_fkey" FOREIGN KEY ("ordersId") REFERENCES "Orders" ("id") ON DELETE RESTRICT ON UPDATE CASCADE
 );
+
+-- CreateIndex
+CREATE UNIQUE INDEX "Session_braceletId_key" ON "Session"("braceletId") WHERE "status" = 'OPEN';

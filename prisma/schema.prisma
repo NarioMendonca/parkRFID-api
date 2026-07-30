@@ -4,8 +4,10 @@
 // Get a free hosted Postgres database in seconds: `npx create-db`
 
 generator client {
-  provider = "prisma-client"
+  provider = "prisma-client-js"
   output   = "../generated/prisma"
+
+  previewFeatures = ["partialIndexes"]
 }
 
 datasource db {
@@ -36,13 +38,15 @@ model Session {
   checkoutDate    DateTime?
   checkinDate     DateTime
   status          Status      @default(OPEN)
-  total           Decimal
+  total           Decimal     @default("0")
   sessionType     SessionType @default(NORMAL)
   sessionsGroupId String
 
   sessionGroup SessionsGroup @relation(fields: [sessionsGroupId], references: [id])
 
   orders Orders[]
+
+  @@unique([braceletId], where: { status: "OPEN" })
 }
 
 model MenuItems {
