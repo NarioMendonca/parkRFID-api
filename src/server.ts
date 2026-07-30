@@ -1,10 +1,9 @@
 import { fastify } from "fastify";
-import { sayHello } from "@/funcao.js";
 
 const app = fastify();
 
-app.get("/", () => {
-	return sayHello();
+app.get("/", async () => {
+	return "Server running!";
 });
 
 const PORT = 3333;
