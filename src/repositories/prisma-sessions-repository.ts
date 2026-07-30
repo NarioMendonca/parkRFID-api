@@ -2,7 +2,7 @@ import { prisma } from "@/lib/prisma.js";
 import type { Prisma } from "../../generated/prisma/client.js";
 
 export class PrismaSessionsRepository {
-	async findSessionByBraceletId(braceletId: string) {
+	async findActiveSessionByBraceletId(braceletId: string) {
 		const session = await prisma.session.findFirst({
 			where: {
 				braceletId,
@@ -11,6 +11,26 @@ export class PrismaSessionsRepository {
 		});
 
 		return session;
+	}
+
+	async findSessionByBraceletId(braceletId: string) {
+		const session = await prisma.session.findFirst({
+			where: {
+				braceletId,
+			},
+		});
+
+		return session;
+	}
+
+	async findSessionGroupById(id: string) {
+		const sessionGroup = await prisma.sessionsGroup.findFirst({
+			where: {
+				id,
+			},
+		});
+
+		return sessionGroup;
 	}
 
 	async createSessionGroup({
@@ -30,17 +50,17 @@ export class PrismaSessionsRepository {
 	async createSession({
 		braceletId,
 		checkinDate,
-		sessionGroup,
+		sessionsGroupId,
 		total,
 		sessionType,
-	}: Prisma.SessionCreateInput) {
+	}: Prisma.SessionUncheckedCreateInput) {
 		const session = await prisma.session.create({
 			data: {
 				braceletId,
 				checkinDate,
 				total,
 				sessionType,
-				sessionGroup,
+				sessionsGroupId,
 			},
 		});
 
