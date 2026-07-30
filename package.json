@@ -14,12 +14,17 @@
 	"author": "",
 	"license": "ISC",
 	"dependencies": {
+		"@fastify/cors": "^11.3.0",
+		"@fastify/swagger": "^9.8.1",
 		"@prisma/adapter-better-sqlite3": "^7.9.1",
 		"@prisma/client": "^7.9.1",
+		"@scalar/fastify-api-reference": "^1.63.0",
 		"better-sqlite3": "^13.0.1",
 		"decimal.js": "^10.6.0",
 		"dotenv": "^17.4.2",
-		"fastify": "^5.10.0"
+		"fastify": "^5.10.0",
+		"fastify-type-provider-zod": "^7.0.0",
+		"zod": "^4.4.3"
 	},
 	"engines": {
 		"node": "24.18.0"
