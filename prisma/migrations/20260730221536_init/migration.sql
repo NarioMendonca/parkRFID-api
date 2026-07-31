@@ -10,7 +10,7 @@ CREATE TABLE "Session" (
     "id" TEXT NOT NULL PRIMARY KEY,
     "braceletId" TEXT NOT NULL,
     "checkoutDate" DATETIME,
-    "checkinDate" DATETIME NOT NULL,
+    "checkinDate" DATETIME DEFAULT CURRENT_TIMESTAMP,
     "status" TEXT NOT NULL DEFAULT 'OPEN',
     "total" DECIMAL NOT NULL DEFAULT 0,
     "sessionType" TEXT NOT NULL DEFAULT 'NORMAL',

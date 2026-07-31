@@ -6,8 +6,7 @@ import { PrismaSessionsRepository } from "@/repositories/prisma-sessions-reposit
 type CreateSessionInput = {
 	sessionGroupId: string;
 	braceletId: string;
-	checkinDate: Date;
-	sessionType: "NORMAL" | "KID";
+	sessionType?: "NORMAL" | "KID";
 };
 
 export class CreateSessionUseCase {
@@ -16,7 +15,6 @@ export class CreateSessionUseCase {
 	async handle({
 		braceletId,
 		sessionGroupId,
-		checkinDate,
 		sessionType,
 	}: CreateSessionInput) {
 		const searchedSession =
@@ -39,10 +37,10 @@ export class CreateSessionUseCase {
 
 		const session = await this.prismaSessionsRepository.createSession({
 			braceletId,
-			checkinDate,
 			checkoutDate: null,
+			checkinDate: new Date(),
 			total: new Decimal("0"),
-			sessionType,
+			sessionType: sessionType ?? "NORMAL",
 			status: "OPEN",
 			sessionsGroupId: sessionGroupId,
 		});

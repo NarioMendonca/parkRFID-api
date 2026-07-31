@@ -36,7 +36,7 @@ model Session {
   id              String      @id @default(uuid())
   braceletId      String
   checkoutDate    DateTime?
-  checkinDate     DateTime
+  checkinDate     DateTime?   @default(now())
   status          Status      @default(OPEN)
   total           Decimal     @default("0")
   sessionType     SessionType @default(NORMAL)
