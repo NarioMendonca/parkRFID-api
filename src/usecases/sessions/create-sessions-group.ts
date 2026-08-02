@@ -1,7 +1,8 @@
 import { InvalidResourceError } from "@/errors/InvalidResourceError.js";
+import type { SessionGroupDTO } from "@/model/dtos/session-group-dto.js";
 import { PrismaSessionsRepository } from "@/repositories/prisma-sessions-repository.js";
 
-type SessionGroupDTO = {
+type SessionGroupInput = {
 	responsibleCpf: string;
 	responsiblePhoneNumber: string;
 };
@@ -12,7 +13,7 @@ export class CreateSessionGroupUseCase {
 	async handle({
 		responsibleCpf,
 		responsiblePhoneNumber,
-	}: SessionGroupDTO): Promise<SessionGroupDTO> {
+	}: SessionGroupInput): Promise<SessionGroupDTO> {
 		if (responsibleCpf.length !== 11) {
 			throw new InvalidResourceError("Invalid responsible cpf");
 		}
