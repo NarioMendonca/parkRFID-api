@@ -2,7 +2,7 @@ import { Decimal } from "decimal.js";
 import type { FastifyInstance } from "fastify";
 import type { ZodTypeProvider } from "fastify-type-provider-zod";
 import { menuItemToResponse } from "@/model/mappers/menu-item-to-response.js";
-import { CreateMenuItemUseCase } from "@/usecases/menu-items/create-item.js";
+import { CreateMenuItemUseCase } from "@/usecases/menu-items/create-menu-item.js";
 import { CreateMenuItemSchema } from "../schemas/menu-items/create-menu-item.schema.js";
 
 const createMenuItemUseCase = new CreateMenuItemUseCase();
