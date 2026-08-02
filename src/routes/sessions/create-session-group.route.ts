@@ -9,7 +9,7 @@ export async function createSessionGroupRoute(app: FastifyInstance) {
 	app
 		.withTypeProvider<ZodTypeProvider>()
 		.post(
-			"/checkin",
+			"/checkin/group",
 			{ schema: createSessionGroupSchema },
 			async (request, reply) => {
 				const { responsibleCpf, responsiblePhoneNumber } = request.body;
