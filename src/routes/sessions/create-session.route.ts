@@ -1,5 +1,6 @@
 import type { FastifyInstance } from "fastify";
 import type { ZodTypeProvider } from "fastify-type-provider-zod";
+import { sessionToResponse } from "@/model/mappers/session-to-response.js";
 import { CreateSessionUseCase } from "@/usecases/sessions/create-session.js";
 import { createSessionSchema } from "../schemas/create-session.schema.js";
 
@@ -13,16 +14,13 @@ export async function createSessionRoute(app: FastifyInstance) {
 			{ schema: createSessionSchema },
 			async (request, reply) => {
 				const { braceletId, sessionGroupId, sessionType } = request.body;
-				const createdSession = await createSessionUseCase.handle({
+				const sessionRaw = await createSessionUseCase.handle({
 					braceletId,
 					sessionGroupId,
 					sessionType,
 				});
 
-				const session = {
-					...createdSession,
-					total: createdSession.total.toString(),
-				};
+				const session = sessionToResponse(sessionRaw);
 
 				reply.status(200).send({ session, message: "Succesfully created" });
 				return;
