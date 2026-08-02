@@ -5,7 +5,7 @@ import { DeleteMenuItemUseCase } from "@/usecases/menu-items/delete-menu-item.js
 
 const deleteMenuItemUseCase = new DeleteMenuItemUseCase();
 
-export async function createMenuItemRoute(app: FastifyInstance) {
+export async function deleteMenuItemRoute(app: FastifyInstance) {
 	app.withTypeProvider<ZodTypeProvider>().delete(
 		"/:id",
 		{
