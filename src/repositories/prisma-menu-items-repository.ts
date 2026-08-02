@@ -29,4 +29,22 @@ export class PrismaMenuItemsRepository {
 
 		return menuItems;
 	}
+
+	async findItemById(id: string) {
+		const menuItem = await prisma.menuItems.findFirst({
+			where: {
+				id,
+			},
+		});
+
+		return menuItem;
+	}
+
+	async deleteItem(id: string) {
+		await prisma.menuItems.delete({
+			where: {
+				id,
+			},
+		});
+	}
 }
