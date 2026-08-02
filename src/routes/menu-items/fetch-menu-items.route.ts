@@ -7,7 +7,7 @@ import { MenuItemSchema } from "../schemas/menu-items/menu-item.schema.js";
 
 export async function fetchMenuItemsRoute(app: FastifyInstance) {
 	app.withTypeProvider<ZodTypeProvider>().get(
-		"/menu",
+		"/",
 		{
 			schema: {
 				querystring: z.object({
