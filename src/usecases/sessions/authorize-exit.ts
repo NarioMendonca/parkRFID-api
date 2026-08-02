@@ -1,4 +1,3 @@
-import { NotFoundError } from "@/errors/NotFoundError.js";
 import { PrismaSessionsRepository } from "@/repositories/prisma-sessions-repository.js";
 
 type AuthorizeExitInput = {
@@ -20,10 +19,6 @@ export class AuthorizeExitUseCase {
 				braceletId,
 			);
 		if (!sessionToAuthorize) {
-			throw new NotFoundError("Session to authorize not found");
-		}
-
-		if (sessionToAuthorize.status === "CLOSED") {
 			return {
 				allowed: true,
 			};
