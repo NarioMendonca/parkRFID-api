@@ -40,6 +40,19 @@ export class PrismaMenuItemsRepository {
 		return menuItem;
 	}
 
+	async updateMenuItem(
+		data: Prisma.MenuItemsUpdateWithoutOrderItemsInput & { id: string },
+	) {
+		const menuItem = await prisma.menuItems.update({
+			where: {
+				id: data.id,
+			},
+			data,
+		});
+
+		return menuItem;
+	}
+
 	async deleteItem(id: string) {
 		await prisma.menuItems.delete({
 			where: {
