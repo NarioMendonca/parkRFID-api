@@ -30,7 +30,7 @@ CREATE TABLE "MenuItems" (
 -- CreateTable
 CREATE TABLE "Orders" (
     "id" TEXT NOT NULL PRIMARY KEY,
-    "createdAt" DATETIME NOT NULL,
+    "createdAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "sessionId" TEXT NOT NULL,
     CONSTRAINT "Orders_sessionId_fkey" FOREIGN KEY ("sessionId") REFERENCES "Session" ("id") ON DELETE RESTRICT ON UPDATE CASCADE
 );

@@ -61,7 +61,7 @@ model MenuItems {
 
 model Orders {
   id        String   @id @default(uuid())
-  createdAt DateTime
+  createdAt DateTime @default(now())
   sessionId String
 
   session    Session      @relation(fields: [sessionId], references: [id])
