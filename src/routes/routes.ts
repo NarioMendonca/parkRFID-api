@@ -1,5 +1,6 @@
 import type { FastifyInstance } from "fastify";
 import { menuItemsRoutes } from "./menu-items/menu-items-routes.js";
+import { ordersRoutes } from "./orders/orders-routes.js";
 import { sessionsRoutes } from "./sessions/sessions-routes.js";
 
 export async function routes(app: FastifyInstance) {
@@ -9,5 +10,8 @@ export async function routes(app: FastifyInstance) {
 	});
 	app.register(menuItemsRoutes, {
 		prefix: "/menu",
+	});
+	app.register(ordersRoutes, {
+		prefix: "/orders",
 	});
 }

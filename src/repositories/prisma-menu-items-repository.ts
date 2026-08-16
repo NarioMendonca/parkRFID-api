@@ -30,6 +30,18 @@ export class PrismaMenuItemsRepository {
 		return menuItems;
 	}
 
+	async fetchItemsById(itemsId: string[]) {
+		const items = await prisma.menuItems.findMany({
+			where: {
+				id: {
+					in: itemsId,
+				},
+			},
+		});
+
+		return items;
+	}
+
 	async findItemById(id: string) {
 		const menuItem = await prisma.menuItems.findFirst({
 			where: {
