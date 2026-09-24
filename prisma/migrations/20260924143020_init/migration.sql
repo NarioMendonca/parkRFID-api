@@ -6,7 +6,14 @@ CREATE TABLE "SessionsGroup" (
 );
 
 -- CreateTable
-CREATE TABLE "Session" (
+CREATE TABLE "Bracelets" (
+    "id" TEXT NOT NULL PRIMARY KEY,
+    "uid_rfid" TEXT NOT NULL,
+    "createdAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+-- CreateTable
+CREATE TABLE "Sessions" (
     "id" TEXT NOT NULL PRIMARY KEY,
     "braceletId" TEXT NOT NULL,
     "checkoutDate" DATETIME,
@@ -15,7 +22,7 @@ CREATE TABLE "Session" (
     "total" DECIMAL NOT NULL DEFAULT 0,
     "sessionType" TEXT NOT NULL DEFAULT 'NORMAL',
     "sessionsGroupId" TEXT NOT NULL,
-    CONSTRAINT "Session_sessionsGroupId_fkey" FOREIGN KEY ("sessionsGroupId") REFERENCES "SessionsGroup" ("id") ON DELETE RESTRICT ON UPDATE CASCADE
+    CONSTRAINT "Sessions_sessionsGroupId_fkey" FOREIGN KEY ("sessionsGroupId") REFERENCES "SessionsGroup" ("id") ON DELETE RESTRICT ON UPDATE CASCADE
 );
 
 -- CreateTable
@@ -32,7 +39,7 @@ CREATE TABLE "Orders" (
     "id" TEXT NOT NULL PRIMARY KEY,
     "createdAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "sessionId" TEXT NOT NULL,
-    CONSTRAINT "Orders_sessionId_fkey" FOREIGN KEY ("sessionId") REFERENCES "Session" ("id") ON DELETE RESTRICT ON UPDATE CASCADE
+    CONSTRAINT "Orders_sessionId_fkey" FOREIGN KEY ("sessionId") REFERENCES "Sessions" ("id") ON DELETE RESTRICT ON UPDATE CASCADE
 );
 
 -- CreateTable
@@ -46,4 +53,7 @@ CREATE TABLE "OrderItems" (
 );
 
 -- CreateIndex
-CREATE UNIQUE INDEX "Session_braceletId_key" ON "Session"("braceletId") WHERE "status" = 'OPEN';
+CREATE UNIQUE INDEX "Bracelets_uid_rfid_key" ON "Bracelets"("uid_rfid");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "Sessions_braceletId_key" ON "Sessions"("braceletId") WHERE "status" = 'OPEN';

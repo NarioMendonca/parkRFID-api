@@ -19,7 +19,7 @@ model SessionsGroup {
   responsibleCpf         String
   responsiblePhoneNumber String
 
-  session Session[]
+  session Sessions[]
 }
 
 enum Status {
@@ -32,7 +32,13 @@ enum SessionType {
   KID
 }
 
-model Session {
+model Bracelets {
+  id        String   @id @default(uuid())
+  uid_rfid  String   @unique
+  createdAt DateTime @default(now())
+}
+
+model Sessions {
   id              String      @id @default(uuid())
   braceletId      String
   checkoutDate    DateTime?
@@ -64,7 +70,7 @@ model Orders {
   createdAt DateTime @default(now())
   sessionId String
 
-  session    Session      @relation(fields: [sessionId], references: [id])
+  session    Sessions     @relation(fields: [sessionId], references: [id])
   orderItems OrderItems[]
 }
 
