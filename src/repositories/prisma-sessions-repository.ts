@@ -1,9 +1,9 @@
 import { prisma } from "@/lib/prisma.js";
-import type { Prisma, Session } from "../../generated/prisma/client.js";
+import type { Prisma, Sessions } from "../../generated/prisma/client.js";
 
 export class PrismaSessionsRepository {
 	async findActiveSessionByBraceletId(braceletId: string) {
-		const session = await prisma.session.findFirst({
+		const session = await prisma.sessions.findFirst({
 			where: {
 				braceletId,
 				status: "OPEN",
@@ -14,7 +14,7 @@ export class PrismaSessionsRepository {
 	}
 
 	async findSessionByBraceletId(braceletId: string) {
-		const session = await prisma.session.findFirst({
+		const session = await prisma.sessions.findFirst({
 			where: {
 				braceletId,
 			},
@@ -53,8 +53,8 @@ export class PrismaSessionsRepository {
 		sessionsGroupId,
 		total,
 		sessionType,
-	}: Prisma.SessionUncheckedCreateInput) {
-		const session = await prisma.session.create({
+	}: Prisma.SessionsUncheckedCreateInput) {
+		const session = await prisma.sessions.create({
 			data: {
 				braceletId,
 				checkinDate,
@@ -68,9 +68,8 @@ export class PrismaSessionsRepository {
 	}
 
 	async closeSession(braceletId: string) {
-		console.log(braceletId);
 		const session =
-			await prisma.$queryRaw<Session>`UPDATE Session SET checkoutDate = DATETIME('now'), STATUS = 'CLOSE' WHERE braceletId = ${braceletId} AND status = 'OPEN' RETURNING *`;
+			await prisma.$queryRaw<Sessions>`UPDATE Session SET checkoutDate = DATETIME('now'), STATUS = 'CLOSE' WHERE braceletId = ${braceletId} AND status = 'OPEN' RETURNING *`;
 
 		return session;
 	}
